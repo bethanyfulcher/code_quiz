@@ -7,6 +7,9 @@
 .start {
     margin-top: 20px;
 }
+.clear, .goBack {
+    margin: 20px auto;
+}
 
 #floatLeft {
     position: fixed;
