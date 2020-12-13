@@ -1,0 +1,23 @@
+.container {
+    width: 50%;
+    margin: 100px auto;
+    text-align: center;
+}
+
+.start {
+    margin-top: 20px;
+}
+
+#floatLeft {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 5px 10px;
+}
+
+#floatRight {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 5px 10px;
+}
