@@ -25,7 +25,23 @@ button {
     display: block;
 }
 
-#floatLeft {
+#indexPage {
+    display: block;
+}
+
+#questionPage {
+    display: none;
+}
+
+#highscoresPage {
+    display: none;
+}
+
+#finalPage {
+    display: none;
+}
+
+#floatLeftPage {
     position: fixed;
     top: 0;
     left: 0;

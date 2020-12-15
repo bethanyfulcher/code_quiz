@@ -14,6 +14,7 @@
         <p id="floatRight">Time: <span class="time"></span></p>
     </nav>
 
+<div id="introPage">
     <main class= "container center">
         <h1>
             Coding Quiz Challenge
@@ -25,6 +26,49 @@
             Start Quiz
         </button>
     </main>
-    <script src="index.js"></script>
+</div>
+
+<div id="questionPage">
+    <main class="container">
+        <p class="question">Question</p>
+        <section class="answers"></section>
+    </main>
+</div>
+
+<div id="finalPage">
+    <main class= "container">
+        <h1>
+            All done!
+        </h1>
+        <section>
+            Your final score is <span class="finalScore"></span>
+        </section>
+        <div>
+            <p>Enter initials:
+                <input class="initials" type="text">
+                <button type="button" class="submit btn btn-success">
+                    Submit
+                </button>
+            </p>
+        </div>
+    </main>
+</div>
+
+<div id="highscoresPage">
+    <main class="container">
+        <h1>HighScores</h1>
+        <section class="scores"></section>
+        <div class="row">
+            <button type="button" class="goBack col-3 btn btn-success">
+                Go Back
+            </button>
+            <button type="button" class="clear col-3 btn btn-success">
+                Clear Highscores
+            </button>
+        </div>
+    </main>
+</div>
+
+<script src="index.js"></script>
 </body>
 </html>
