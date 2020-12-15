@@ -10,12 +10,19 @@
 .start {
     margin-top: 20px;
 }
+
 .clear, .goBack {
     margin: 20px auto;
 }
 
-.answerButton {
+.question {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+button {
     margin: 5px auto;
+    display: block;
 }
 
 #floatLeft {
