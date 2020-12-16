@@ -10,7 +10,9 @@
 </head>
 <body>
     <nav>
-        <p id="floatLeft" ><a href="highscores.html" class="link-success">View Highscores</a></p>
+        <div id="hsLink">
+            <p id="floatLeft" class = "viewHighscores"><a href="highscores.html" class="link-success highscoresLink">View Highscores</a></p>
+        </div>
         <p id="floatRight">Time: <span class="time"></span></p>
     </nav>
 
@@ -57,13 +59,12 @@
 <div id="highscoresPage">
     <main class="container">
         <h1>HighScores</h1>
-        <section class="scores"></section>
+        <div class = "row"> 
+            <section class="scores"></section>
+        </div>
         <div class="row">
             <button type="button" class="goBack col-3 btn btn-success">
                 Go Back
-            </button>
-            <button type="button" class="clear col-3 btn btn-success">
-                Clear Highscores
             </button>
         </div>
     </main>

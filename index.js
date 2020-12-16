@@ -1,20 +1,24 @@
 // Variables referencing parts of HTML
 var start = document.querySelector(".start");
 var time = document.querySelector(".time")
-var intro = document.querySelector("#introPage")
-var question = document.querySelector("#questionPage")
-var final = document.querySelector("#finalPage")
-var highscores = document.querySelector("#highscoresPage")
+var introPage = document.querySelector("#introPage")
+var questionPage = document.querySelector("#questionPage")
+var finalPage = document.querySelector("#finalPage")
+var highscoresPage = document.querySelector("#highscoresPage")
 var questionText = document.querySelector(".question")
 var answerText = document.querySelector(".answers")
 var finalScore = document.querySelector(".finalScore")
 var inputForm = document.querySelector(".initials")
+var viewHighscores = document.querySelector("#hsLink")
+var highscoresList = document.querySelector(".scores")
 
 // counting variables
 var questionCount = 0;
-var secondsLeft = 100;
+var secondsLeft = 75;
 
 var initials
+var initialsArray = []
+var scoresArray = []
 
 // variables holding content of questions and answers
 var questions = ["Commonly used data types DO NOT include:", "The condition in an if / else statement is enclosed within ___________.", "Arrays in JavaScript can be used to store __________.", "String values must be enclosed within _______ when being assigned to variables."]
@@ -31,8 +35,9 @@ start.addEventListener("click", function (event) {
     // event.preventDefault()
     var element = event.target;
     if (element.matches("button")) {
-        intro.setAttribute("style", "display: none")
-        question.setAttribute("style", "display: block")
+        introPage.setAttribute("style", "display: none")
+        viewHighscores.setAttribute("style", "display: none")
+        questionPage.setAttribute("style", "display: block")
         startQuiz()
     }
 })
@@ -82,65 +87,120 @@ var fillQuiz = function () {
     }
 }
 
-    // looks for a click
-    document.addEventListener("click", function (event) {
-        event.preventDefault()
-        
-        // defines what the user clicked on
-        var elementType = event.target;
-        var element = event.target.innerText;
-        
-        // makes sure that whatever the user clicks is a button
-        if (elementType.matches(".answerButton")) {
-            // if user answer equals the correct answer
-            if (element === correctAnswers[questionCount ]) {
-                console.log("correct!!")
-                
-                // clear previous questions text
-                questionText.innerHTML = '';
-                answerText.innerHTML = '';
-                // fill quiz for next question
-                questionCount++
-                fillQuiz()
-            }
-            // 
-            else {
-                // prevents timer from going negative
-                if (secondsLeft >= 10) {
-                    console.log("wrong answer!!!")
-                    secondsLeft = secondsLeft - 10;
-                }
-                else {
-                    secondsLeft = 0
-                }
-            }
-        }
+// looks for a click
+document.addEventListener("click", function (event) {
+    event.preventDefault()
 
-        // looks for a click of the submit button on the end page
-        if (elementType.matches(".submit")) {
-            console.log("submited!")
-            addHighscore()
-            
+    // defines what the user clicked on
+    var elementType = event.target;
+    var element = event.target.innerText;
+
+    // makes sure that whatever the user clicks is a button
+    if (elementType.matches(".answerButton")) {
+        // if user answer equals the correct answer
+        if (element === correctAnswers[questionCount]) {
+            console.log("correct!!")
+
+            // clear previous questions text
+            questionText.innerHTML = '';
+            answerText.innerHTML = '';
+            // fill quiz for next question
+            questionCount++
+            fillQuiz()
         }
-    })
-    
-    var endQuiz = function() {
-        clearInterval(timerInterval);
-        // add code to go to end page
-        question.setAttribute("style", "display: none")
-        final.setAttribute("style", "display: block")
+        // 
+        else {
+            // prevents timer from going negative
+            if (secondsLeft >= 10) {
+                console.log("wrong answer!!!")
+                secondsLeft = secondsLeft - 10;
+            }
+            else {
+                secondsLeft = 0
+            }
+        }
+    }
+
+    // looks for a click of the submit button on the end page
+    if (elementType.matches(".submit")) {
+        console.log("submited!")
+
+        // store values into array
         
-        finalScore.textContent = secondsLeft
+        var scoreInitial = inputForm.value.trim() + "  --->   " + secondsLeft 
+        console.log(scoreInitial)
+        // var initials = inputForm.value.trim()
+        
+
+        initialsArray.push(scoreInitial)
+        console.log(initialsArray)
+        storeHighscores()
+        goToHighscore()
+
+    }
+
+    // goes back to home page from the highscores page
+    if (elementType.matches(".goBack"))
+    {
+        highscoresPage.setAttribute("style", "display: none")
+        viewHighscores.setAttribute("style", "display: block")
+        introPage.setAttribute("style", "display: block")
+
+        questionCount = 0;
+        secondsLeft = 75;
     }
     
-    var addHighscore = function() {
-        // save the users input into a variable 
-        // add finalScore to local variable
-        // make sure initials are attached to the score
-        initials = inputForm.value
-        console.log(initials)
-        
-        // changes page displayed
-        final.setAttribute("style", "display: none")
-        highscores.setAttribute("style", "display: block")
+    // goes to highscores page from intro page
+    if (elementType.matches(".highscoresLink"))
+    {
+        introPage.setAttribute("style", "display: none")
+        finalPage.setAttribute("style", "display: none")
+        questionPage.setAttribute("style", "display: none")
+        highscoresPage.setAttribute("style", "display: block")
+    }
+
+})
+
+var endQuiz = function () {
+    clearInterval(timerInterval);
+    // add code to go to end page
+    questionPage.setAttribute("style", "display: none")
+    finalPage.setAttribute("style", "display: block")
+
+    finalScore.textContent = secondsLeft
+}
+
+var goToHighscore = function () {
+    // change page displayed
+    finalPage.setAttribute("style", "display: none")
+    highscoresPage.setAttribute("style", "display: block")
+    getStoredHighscores()
+}
+
+var getStoredHighscores = function () {
+    var storedInitials = JSON.parse(localStorage.getItem("initialsArray"))
+
+    if (storedInitials !== null) {
+        initialsArray = storedInitials
+    }
+
+    addHighscores()
+}
+
+
+var addHighscores = function () {
+    highscoresList.innerHTML = ""
+
+    for (var i = 0; i < initialsArray.length; i++) {
+        var newInitial = initialsArray[i]
+
+        var li = document.createElement("li")
+        li.textContent = newInitial
+
+        highscoresList.appendChild(li)
+    }
+}
+
+var storeHighscores = function () {
+    localStorage.setItem("initialsArray", JSON.stringify(initialsArray))
 }
